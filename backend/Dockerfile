@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install --only=production
 
-COPY src/deployment .
+COPY . .
 
 RUN npm run build
 
