@@ -14,7 +14,7 @@ phases:
   build:
     commands:
       - echo Building the Docker images...
-      - docker build --cache-from $BACKEND_REPOSITORY_URL:latest -t $BACKEND_REPOSITORY_URL:$GIT_SHA .
+      - docker build --cache-from $BACKEND_REPOSITORY_URL:latest -t $BACKEND_REPOSITORY_URL:$GIT_SHA ./backend
       - docker tag $BACKEND_REPOSITORY_URL:$GIT_SHA $BACKEND_REPOSITORY_URL:latest
   post_build:
     commands:

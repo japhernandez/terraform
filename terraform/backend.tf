@@ -59,14 +59,30 @@ resource "aws_ecs_task_definition" "backend" {
   cpu    = 256
   memory = 512
 
-  container_definitions = templatefile("${abspath(path.root)}/../backend/taskdef.json", {
+  /* container_definitions = templatefile("${abspath(path.root)}/../backend/taskdef.json", {
     BACKEND_IMAGE_PATH = aws_ecr_repository.backend.repository_url
     # DB_HOST            = aws_db_instance.db.address
     # DB_PORT            = aws_db_instance.db.port
     # DB_DATABASE        = aws_db_instance.db.name
     # DB_USERNAME        = "${aws_secretsmanager_secret.rds_secret.arn}:username::"
     # DB_PASSWORD        = "${aws_secretsmanager_secret.rds_secret.arn}:password::"
-  })
+  }) */
+
+  container_definitions = jsonencode([
+    {
+      name: "backend"
+      image: aws_ecr_repository.backend.repository_url,
+      essential: true,
+      environment: "dev",
+      portMapping = [
+        {
+          protocol = "tcp",
+          containerPort = 80,
+          hostPort = 80
+        }
+      ]
+    }
+  ])
 }
 
 resource "aws_service_discovery_service" "backend" {
