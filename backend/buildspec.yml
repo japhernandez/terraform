@@ -14,8 +14,8 @@ phases:
   build:
     commands:
       - echo Building the Docker images...
-      - pwd ./backend
-      - docker build -t $BACKEND_REPOSITORY_URL:$GIT_SHA ./backend
+      - pwd .
+      - docker build -t $BACKEND_REPOSITORY_URL:$GIT_SHA .
       - docker tag $BACKEND_REPOSITORY_URL:$GIT_SHA $BACKEND_REPOSITORY_URL:latest
   post_build:
     commands:
