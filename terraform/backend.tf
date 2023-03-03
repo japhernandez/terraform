@@ -68,17 +68,17 @@ resource "aws_ecs_task_definition" "backend" {
     # DB_PASSWORD        = "${aws_secretsmanager_secret.rds_secret.arn}:password::"
   }) */
 
-  container_definitions = jsonencode([
+container_definitions = jsonencode([
     {
-      name = "backend"
-      image = aws_ecr_repository.backend.repository_url
+      name      = "backend"
+      image     = aws_ecr_repository.backend.repository_url
+      cpu       = 10
+      memory    = 512
       essential = true
-      environment = "dev"
-      portMapping = [
+      portMappings = [
         {
-          protocol = "tcp"
           containerPort = 80
-          hostPort = 80
+          hostPort      = 80
         }
       ]
     }
